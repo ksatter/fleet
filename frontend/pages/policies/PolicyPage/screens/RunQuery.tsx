@@ -15,7 +15,7 @@ import { ICampaign, ICampaignState } from "interfaces/campaign";
 import { IPolicy } from "interfaces/policy";
 import { ITarget } from "interfaces/target";
 
-import QueryResults from "components/QueryResults";
+import QueryResults from "../components/QueryResults";
 
 interface IRunQueryProps {
   storedPolicy: IPolicy | undefined;
@@ -31,7 +31,7 @@ const RunQuery = ({
   policyIdForEdit,
   setSelectedTargets,
   goToQueryEditor,
-}: IRunQueryProps) => {
+}: IRunQueryProps): JSX.Element => {
   const dispatch = useDispatch();
 
   const [isQueryFinished, setIsQueryFinished] = useState<boolean>(false);
