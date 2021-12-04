@@ -17,6 +17,8 @@ import InputField from "components/forms/fields/InputField";
 import QueryResultsRow from "components/queries/QueryResultsRow";
 import Spinner from "components/Spinner";
 import TabsWrapper from "components/TabsWrapper";
+import PolicyQueryListWrapper from "../PolicyQueryListWrapper/PolicyQueriesListWrapper";
+
 import DownloadIcon from "../../../../../../assets/images/icon-download-12x12@2x.png";
 
 interface IQueryResultsProps {
@@ -49,6 +51,12 @@ const QueryResults = ({
 }: IQueryResultsProps): JSX.Element => {
   const { hosts_count: hostsCount, query_results: queryResults, errors } =
     campaign || {};
+
+  // START HERE: Need to compare results of campaign.hosts (all hosts targeted) vs.
+  // campaign.query_results (hosts that pass) to determine that hosts yes/no status.
+  // ALSO: Need to pass in the new combined array instead of quest_results directly (which only
+  // shows passing hosts)
+  console.log("campaign: ", campaign);
 
   const totalHostsOnline = get(campaign, ["totals", "online"], 0);
   const totalHostsOffline = get(campaign, ["totals", "offline"], 0);
@@ -318,7 +326,13 @@ const QueryResults = ({
               {NAV_TITLES.ERRORS}
             </Tab>
           </TabList>
-          <TabPanel>{renderTable()}</TabPanel>
+          <TabPanel>
+            <PolicyQueryListWrapper
+              isLoading={false}
+              policyQueriesList={queryResults}
+              resultsTitle="host"
+            />
+          </TabPanel>
           <TabPanel>{renderErrorsTable()}</TabPanel>
         </Tabs>
       </TabsWrapper>
